@@ -267,13 +267,13 @@ const EditProfile = ({ user }) => {
                             <img
                               src={formData.photoUrl}
                               alt="Profile Preview"
-                              onError={(e) => {
-                                e.target.src = "https://placeholder.com/150";
-                                setErrors({
-                                  ...errors,
-                                  photoUrl: "Invalid image URL",
-                                });
-                              }}
+                              // onError={(e) => {
+                              //   e.target.src = "https://placeholder.com/150";
+                              //   setErrors({
+                              //     ...errors,
+                              //     photoUrl: "Invalid image URL",
+                              //   });
+                              // }}
                             />
                           </div>
                         </div>
