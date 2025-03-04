@@ -1,27 +1,46 @@
 import React from "react";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { removeUserFromFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user, preview = false }) => {
+const UserCard = ({ user, preview = false, onAction }) => {
+  const dispatch = useDispatch();
+  const handleSendRequest = async (status, userId) => {
+    try {
+      await axios.post(
+        `${BASE_URL}/request/send/${status}/${userId}`,
+        {},
+        { withCredentials: true }
+      );
+      toast.success("Request sent!");
+      dispatch(removeUserFromFeed(userId));
+    } catch (error) {
+      console.error("Error sending request:", error);
+      toast.error("Failed to send request");
+    }
+  };
+
   return (
-    <div className="card bg-base-100 w-96 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+    <div className="card bg-base-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
       <figure className="px-4 pt-4">
         <img
           src={user.photoUrl}
           alt={user.firstName}
-          className="rounded-xl h-64 w-full object-cover"
+          className="rounded-full h-80 w-80 object-cover border-4 border-white shadow-md"
         />
       </figure>
-      <div className="card-body">
+      <div className="card-body text-center">
         <h2 className="card-title text-2xl font-bold mb-2">
           {user.firstName + " " + user.lastName}
           <div className="badge badge-secondary">{user.age}</div>
         </h2>
-
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
+          <div className="flex justify-center gap-2">
             <span className="text-base-content/70">Gender:</span>
             <span className="badge badge-outline">{user.gender}</span>
           </div>
-
           {user.about && (
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-base-content/70">
@@ -33,11 +52,26 @@ const UserCard = ({ user, preview = false }) => {
             </div>
           )}
         </div>
-
         {!preview && (
-          <div className="card-actions justify-end mt-4 pt-4 border-t">
-            <button className="btn btn-outline btn-error">Ignore</button>
-            <button className="btn btn-primary">Interested</button>
+          <div className="card-actions justify-center mt-4 pt-4 border-t">
+            <button
+              className="btn btn-outline btn-error w-1/2"
+              onClick={() => {
+                handleSendRequest("ignored", user._id);
+                onAction();
+              }}
+            >
+              Ignore
+            </button>
+            <button
+              className="btn btn-primary w-1/2"
+              onClick={() => {
+                handleSendRequest("interested", user._id);
+                onAction();
+              }}
+            >
+              Interested
+            </button>
           </div>
         )}
       </div>
