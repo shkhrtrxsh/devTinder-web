@@ -57,8 +57,9 @@ const EditProfile = ({ user }) => {
       dispatch(addUser(res.data.user));
       setShowSuccess(true);
       setTimeout(() => {
+        setShowSuccess(false);
         navigate("/profile");
-      }, 2000);
+      }, 3000);
     } catch (error) {
       console.log(error);
       if (error.response?.data?.message) {
