@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import { addFeed } from "../utils/feedSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("shristi@gmail.com");
-  const [password, setPassword] = useState("Fulsend@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -74,11 +75,8 @@ const Login = () => {
       );
 
       dispatch(addUser(res.data.user));
-      if (isLogin) {
-        navigate("/");
-      } else {
-        navigate("/profile");
-      }
+      dispatch(addFeed(null));
+      navigate("/");
     } catch (error) {
       console.log(error);
       if (error.response?.data?.message) {
@@ -171,7 +169,9 @@ const Login = () => {
               className="btn btn-link"
               onClick={() => setIsLogin(!isLogin)}
             >
-              {isLogin ? "Create an account" : "Already have an account?"}
+              {isLogin
+                ? "New here? Create an account"
+                : "Already have an account?"}
             </button>
           </div>
         </div>

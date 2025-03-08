@@ -33,11 +33,6 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="flex gap-2">
-        <input
-          type="text"
-          placeholder="Search"
-          className="input input-bordered w-24 md:w-auto"
-        />
         {user && (
           <div className="dropdown dropdown-end mx-5 flex items-center gap-4">
             <p className="text-white">Welcome {user?.firstName}!</p>

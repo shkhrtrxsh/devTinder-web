@@ -8,12 +8,10 @@ import UserCard from "./UserCard";
 const Feed = () => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
+  const user = useSelector((store) => store.user);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const getFeed = async () => {
-    if (feed) {
-      return;
-    }
     try {
       const res = await axios.get(`${BASE_URL}/feed`, {
         withCredentials: true,
@@ -25,8 +23,10 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    getFeed();
-  }, []);
+    if (user && !feed) {
+      getFeed();
+    }
+  }, [user, feed]);
 
   const handleAction = () => {
     setCurrentIndex((prevIndex) => {
@@ -48,7 +48,7 @@ const Feed = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center items-center min-h-screen">
+    <div className="flex flex-wrap gap-4 justify-center items-center min-h-[calc(100vh-10rem)]">
       {feed && feed.length > 0 ? (
         <UserCard user={feed[0]} onAction={handleAction} />
       ) : (

@@ -28,7 +28,7 @@ const UserCard = ({ user, preview = false, onAction }) => {
         <img
           src={user?.photoUrl}
           alt={user?.firstName}
-          className="rounded-full h-80 w-80 object-cover border-4 border-white shadow-md"
+          className="rounded-full h-120 w-110 object-cover border-4 border-white shadow-md"
         />
       </figure>
       <div className="card-body text-center">
@@ -40,14 +40,10 @@ const UserCard = ({ user, preview = false, onAction }) => {
         </div>
         <div className="space-y-3 text-center">
           <div className="flex justify-center gap-2">
-            <span className="text-base-content/70">Gender:</span>
             <span className="badge badge-outline">{user?.gender}</span>
           </div>
           {user?.about && (
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-base-content/70">
-                About Me
-              </h3>
               <div className="bg-base-200 p-4 rounded-lg">
                 <p className="text-sm leading-relaxed">{user?.about}</p>
               </div>
@@ -57,15 +53,6 @@ const UserCard = ({ user, preview = false, onAction }) => {
         {!preview && (
           <div className="card-actions justify-center mt-4 pt-4 border-t">
             <button
-              className="btn btn-outline btn-error w-1/2"
-              onClick={() => {
-                handleSendRequest("ignored", user?._id);
-                onAction();
-              }}
-            >
-              Ignore
-            </button>
-            <button
               className="btn btn-primary w-1/2"
               onClick={() => {
                 handleSendRequest("interested", user?._id);
@@ -73,6 +60,15 @@ const UserCard = ({ user, preview = false, onAction }) => {
               }}
             >
               Interested
+            </button>
+            <button
+              className="btn btn-outline btn-error w-1/2"
+              onClick={() => {
+                handleSendRequest("ignored", user?._id);
+                onAction();
+              }}
+            >
+              Ignore
             </button>
           </div>
         )}
