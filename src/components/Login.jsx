@@ -7,8 +7,8 @@ import { BASE_URL } from "../utils/constants";
 import { addFeed } from "../utils/feedSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("shristi@gmail.com");
+  const [password, setPassword] = useState("Fulsend@123");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [isLogin, setIsLogin] = useState(true);
